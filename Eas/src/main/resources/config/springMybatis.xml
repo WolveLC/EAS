@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置mybatis工厂 -->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource"></property>
+        <!-- 配置MyBatis的核心配置文件所在位置 -->
+        <property name="configLocation" value="classpath:config/mybatis-config.xml" />
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <property name="typeAliasesPackage" value="com.lc.entity"></property>
+        <!-- 分页插件 -->
+        <!-- 注意其他配置 -->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!--使用下面的方式配置参数，一行配置一个 -->
+                        <value>
+                            helperDialect=mysql
+                            <!--reasonable：分页合理化参数，默认值为false,直接根据参数进行查询。
+			  当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页。-->
+                            <!-- reasonable=true-->
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+    <!-- 接口开发,扫描 com.hqyj.gyq.dao包 ，写在此包下的接口即可被扫描到 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.lc.dao" />
+    </bean>
+   <!-- <jdbc:embedded-database id="dataSource"/>-->
+
+   <!-- <jdbc:embedded-database id="dataSource"/>-->
+ <!--   <jdbc:embedded-database id="dataSource"/>-->
+</beans>
