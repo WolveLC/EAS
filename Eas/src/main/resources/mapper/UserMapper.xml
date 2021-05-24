@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lc.dao.UserDao">
+  <resultMap id="user" type="com.lc.entity.User">
+    <id property="userId" column="user_id"></id>
+    <result  property="userNum" column="user_number"></result>
+    <result  property="userName" column="user_name"></result>
+    <result  property="userPwd" column="user_password"></result>
+    <result  property="roleId" column="role_id"></result>
+    <result  property="userSex" column="user_sex"></result>
+  </resultMap>
+
+  <select id="queryUserById" resultMap="user">
+    select*from user where user_id = #{userId}
+  </select>
+
+  <select id="queryUserAll" resultMap="user">
+    select  * from user
+  </select>
+
+  <delete id="deleteUserById">
+    delete from user where user_id=#{userId}
+  </delete>
+
+  <update id="updateUserById">
+    update user set user_name=#{userName},user_password=#{userPwd},user_sex=#{userSex} where user_id=#{userId}
+  </update>
+
+  <insert id="addUser">
+    insert into user (user_id,user_number,user_name,user_password,role_id,user_sex) values (#{userId},#{userNum},#{userName},#{userPwd},#{roleId},#{userSex})
+  </insert>
+
+  <select id="selectUserByNumber" resultMap="user">
+    select * from user where user_number=#{userNum}
+  </select>
+
+</mapper>
